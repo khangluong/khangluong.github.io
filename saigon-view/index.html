@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="app.js"></script>
+    <title>Saigon Camera View</title>
+  </head>
+  <body ng-app="app" ng-controller="Ctrl">
+    <div>
+        <select ng-model="selectedDist" 
+          ng-options="d.dist for d in dist">
+        </select>
+        <select ng-model="selectedCamera"
+          ng-options="c.name for c in selectedDist.list_cams">   
+        </select>
+    </div>
+    <div>
+      <img ng-src="{{ liveUrl }}" />
+    </div>
+    
+  </body>
+</html>
