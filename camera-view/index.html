@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Camera View</title>
+</head>
+<body>
+  <div>
+    <button onclick="changeCam(0)">Cam1</button>
+    <button onclick="changeCam(1)">Cam2</button>
+  </div>
+<img id="cam-view" src="" />
+
+</body>
+<script>
+var camView = document.getElementById('cam-view');
+var snapShotUrls = ["http://api.notis.vn/v2/cameras/5b632a79fd4edb0019c7dc0f/snapshot", "http://api.notis.vn/v2/cameras/5b632b60fd4edb0019c7dc12/snapshot"];
+var snapShotUrl = snapShotUrls[0];
+setInterval(function(){
+  camView.src = snapShotUrl + "?" + Date.now();
+}, 1000);
+
+function changeCam(index){
+  snapShotUrl = snapShotUrls[index];
+}
+</script>
+</html>
