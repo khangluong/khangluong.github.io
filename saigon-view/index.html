@@ -14,9 +14,9 @@ app.controller('Ctrl', function($scope, $http, $interval) {
   $scope.data = [];
   $scope.dist = [];
   $scope.liveUrl = "";
-  $scope.now = Date.now();
+  $scope.now = Date();
     $interval(function(){
-      $scope.now = Date.now();
+      $scope.now = Date();
     },1000);
   // hot reload
     $interval(function(){
