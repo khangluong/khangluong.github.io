@@ -14,12 +14,16 @@ app.controller('Ctrl', function($scope, $http, $interval) {
   $scope.data = [];
   $scope.dist = [];
   $scope.liveUrl = "";
+  $scope.now = Date.now();
+    $interval(function(){
+      $scope.now = Date.now();
+    },1000);
   // hot reload
     $interval(function(){
         if ($scope.selectedCamera !== undefined){
             $scope.liveUrl = 'https://api.notis.vn/v3/' + $scope.selectedCamera.liveUrl + '?t=' + Date.now();
         }
-    }, 100);
+    }, 5000);
   //
   $http.get("https://api.notis.vn/v3/cameras/findall")
     .then(function(res){
@@ -55,6 +59,9 @@ app.controller('Ctrl', function($scope, $http, $interval) {
     <title>Saigon Camera View</title>
   </head>
   <body ng-app="app" ng-controller="Ctrl">
+    <div>
+      {{now}}
+    </div>
     <div>
         <select ng-model="selectedDist" 
           ng-options="d.dist for d in dist">
