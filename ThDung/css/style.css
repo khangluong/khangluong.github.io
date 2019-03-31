@@ -389,26 +389,7 @@ header .smaller.social-media i {
 }
 /* Ken Burns animation */
 
-.slideshow-image:nth-child(1) {
-    background-image: url('../images/banner/slide1.jpg');
-    animation-name: kenburns-1;
-    z-index: 3;
-}
-.slideshow-image:nth-child(2) {
-    background-image: url('../images/banner/slide2.jpg');
-    animation-name: kenburns-2;
-    z-index: 2;
-}
-.slideshow-image:nth-child(3) {
-    background-image: url('../images/banner/slide3.jpg');
-    animation-name: kenburns-3;
-    z-index: 1;
-}
-.slideshow-image:nth-child(4) {
-    background-image: url('../images/banner/slide4.jpg');
-    animation-name: kenburns-4;
-    z-index: 0;
-}
+
 @keyframes kenburns-1 {
     0% {
         opacity: 1;
@@ -2623,4 +2604,14 @@ button.list-group-item:hover {
 #page-width #newsletter{
     max-width:1200px;
     margin:0 auto;
+}
+.dummy {
+    margin-top: 100%;
+}
+.in {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
