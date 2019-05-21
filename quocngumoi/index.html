@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="quocngumoi" ng-controller="mainCtrl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kick ass Ho Ngoc Dai</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<meta property="og:image" content="https://quocngumoi.github.io/main.png" />
+<style>
+    html, body, .container {
+  height: 100%;
+}
+textarea .form-control {
+  height: 100vh;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+.square {
+  height: 50px;
+  width: 50px;
+  background-color: green;
+}
+.circle {
+  height: 50px;
+  width: 50px;
+  background-color: blue;
+  border-radius: 50%;
+}
+.triangle {
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-bottom: 50px solid red;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">New Quoc Ngu</a>
+</nav>
+<br>
+<main class="container-fluid">
+    <div class="row" class="form-group">
+        <div class="col-md-6">
+            <textarea class="form-control"
+            rows="10"
+            ng-model="oldquocngu"
+            ></textarea>
+        </div>
+        <div class="col-md-6">
+            <textarea class="form-control"
+                rows="10"
+                onclick="this.focus();this.select()" readonly="readonly"
+            >{{newquocngu}}</textarea>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <button type="button" class="btn btn-success btn-lg btn-block"
+        ng-click="convert()"
+        >Convert</button>
+    </div>
+</footer>
+</body>
+<script>
+var app = angular.module('quocngumoi', []);
+app.controller('mainCtrl', function($scope) {
+    var vm = $scope
+    vm.oldquocngu = ""
+    vm.newquocngu = ""
+    vm.icon_array = ['♥','🔺','◻', '⚫']
+    vm.convert = function(){
+        vm.newquocngu = ""
+        if (!!vm.oldquocngu){
+            var line_array = vm.oldquocngu.split(/\n/)
+            for (var l = 0; l < line_array.length; l++){
+                var trans_array = line_array[l].split(" ")
+                    for (var i = 0; i < trans_array.length; i++){
+                    var choose = 0
+                    if (!!trans_array[i].length)
+                        choose  = trans_array[i].length
+                    choose--
+                    if (choose > 3) choose = 3
+                    vm.newquocngu += vm.icon_array[choose] + " "
+                }
+                vm.newquocngu += '\n'
+            }
+        }
+    }
+});
+</script>
+</html>
