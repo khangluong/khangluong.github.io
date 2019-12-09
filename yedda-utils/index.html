@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+var app = angular.module('app', []);
+app.controller('Ctrl', function($scope, $http, $interval) {
+    $scope.jsonString = ""
+    $scope.data = []
+    $scope.now = Date();
+    $interval(function(){
+      $scope.now = Date();
+    },1000);
+    $scope.submit = function() {
+
+        dataParameterClient = JSON.parse($scope.jsonString)
+        for (idParameterClient in dataParameterClient){
+            let tmp = {
+                tableName: [],
+                tableRowNumber: [],
+                tableRowPercent: []
+            }
+            parameterClient = dataParameterClient[idParameterClient]
+            for (k in parameterClient){
+                tmp.tableName.push(k)
+                tmp.tableRowNumber.push(parameterClient[k]["Total"]["number"])
+                tmp.tableRowPercent.push(parameterClient[k]["Total"]["percent"])
+            }
+            $scope.data.push(tmp)
+        }
+        console.log($scope.data)
+    }
+});
+</script>
+    <title>Yedda Utils</title>
+  </head>
+  <body ng-app="app" ng-controller="Ctrl">
+    <div>
+      {{now}}
+    </div>
+    <textarea ng-model="jsonString">
+    </textarea>
+    <button ng-click="submit()">Run</button>
+    <div>  
+    </div>
+    
+    <div ng-repeat="table in data">
+      <table border="1">
+          <tr>
+              <td ng-repeat="col in table.tableName track by $index">{{col}}
+              </td>
+          </tr>
+          <tr>
+            <td ng-repeat="col1 in table.tableRowNumber track by $index">{{col1}}
+            </td>
+            </tr>
+        <tr>
+            <td ng-repeat="col2 in table.tableRowPercent track by $index">{{col2}} %</td>
+        </tr>
+      </table>
+    </div>
+    
+  </body>
+</html>
