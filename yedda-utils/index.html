@@ -18,15 +18,17 @@ app.controller('Ctrl', function($scope, $http, $interval) {
       $scope.now = Date();
     },1000);
     $scope.submit = function() {
-
+        $scope.data = []
         dataParameterClient = JSON.parse($scope.jsonString)
         for (idParameterClient in dataParameterClient){
             let tmp = {
+                tableId: 0,
                 tableName: [],
                 tableRowNumber: [],
                 tableRowPercent: []
             }
             parameterClient = dataParameterClient[idParameterClient]
+            tmp.tableId = idParameterClient
             for (k in parameterClient){
                 tmp.tableName.push(k)
                 tmp.tableRowNumber.push(parameterClient[k]["Total"]["number"])
@@ -34,6 +36,7 @@ app.controller('Ctrl', function($scope, $http, $interval) {
             }
             $scope.data.push(tmp)
         }
+        $scope.jsonString = ""
         console.log($scope.data)
     }
 });
@@ -51,6 +54,7 @@ app.controller('Ctrl', function($scope, $http, $interval) {
     </div>
     
     <div ng-repeat="table in data">
+      {{table.tableId}}
       <table border="1">
           <tr>
               <td ng-repeat="col in table.tableName track by $index">{{col}}
