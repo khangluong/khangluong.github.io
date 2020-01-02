@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+var app = angular.module('app', []);
+app.controller('Ctrl', function($scope, $http, $interval) {
+    $scope.jsonString = ""
+    $scope.data = []
+    $scope.now = Date();
+    $scope.cols = ["name", "actual", "subscore"]
+    $interval(function(){
+      $scope.now = Date();
+    },1000);
+    $scope.submit = function() {
+        $scope.data = []
+        dataParameterClient = JSON.parse($scope.jsonString)
+        // dataParameterClient = dataParameterClient.sort((a, b) => a.rank < b.rank)
+        for (idParameterClient in dataParameterClient){
+            let tmp = {
+                tableName: "",
+                tableScore: 0,
+                tableRow: []
+            }
+            parameterClient = dataParameterClient[idParameterClient]
+            tmp.tableName = idParameterClient
+            tmp.tableScore = parameterClient["score"]
+            for (id_section in parameterClient["section"]){
+                k = parameterClient["section"][id_section]
+                let tmpRow = []
+                tmpRow.push(k["name"])
+                tmpRow.push("")
+                tmpRow.push(k["score"])
+                tmp.tableRow.push(tmpRow)
+                for (l in k["sub"]){
+                    let tmpRow2 = []
+                    tmpRow2.push(k["sub"][l]["name"])
+                    tmpRow2.push(k["sub"][l]["actual"])
+                    tmpRow2.push(k["sub"][l]["subscore"])
+                    tmp.tableRow.push(tmpRow2)
+                }
+            }
+            $scope.data.push(tmp)
+        }
+        $scope.jsonString = ""
+        console.log($scope.data)
+    }
+});
+</script>
+    <title>Yedda Utils</title>
+  </head>
+  <body ng-app="app" ng-controller="Ctrl">
+    <div>
+      {{now}}
+    </div>
+    <textarea ng-model="jsonString">
+    </textarea>
+    <button ng-click="submit()">Run</button>
+    <div>  
+    </div>
+    
+    <div ng-repeat="table in data">
+      {{table.tableName}} : {{table.tableScore}}
+      <table border="1">
+          <tr>
+              <td ng-repeat="col in cols">{{col}}
+              </td>
+          </tr>
+          <tr ng-repeat="row in table.tableRow track by $index">
+              <td ng-repeat="d in row track by $index">
+                  {{d}}
+              </td>
+          </tr>
+      </table>
+    </div>
+    
+  </body>
+</html>
